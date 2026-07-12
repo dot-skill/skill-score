@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dot-skill.org/schemas/skill-score/assessment-v0.1.json",
+  "title": "Skill Score Assessment v0.1 (Draft)",
+  "type": "object",
+  "required": ["protocolVersion", "artifact", "evidence"],
+  "additionalProperties": false,
+  "properties": {
+    "protocolVersion": { "const": "0.1" },
+    "artifact": {
+      "type": "object",
+      "required": ["id", "valid", "parseable"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "valid": { "type": "boolean" },
+        "parseable": { "type": "boolean" },
+        "containsSecrets": { "type": "boolean" },
+        "dangerousBehavior": { "type": "boolean" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "dimension", "kind", "status", "source"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "dimension": {
+            "enum": ["structuralCompleteness", "executability", "validationEvidence", "portability", "privacySecurity", "provenanceIntegrity", "reproducibility", "efficiency", "maintenanceFreshness", "adoptionOutcomes"]
+          },
+          "kind": { "enum": ["observed", "verified-external", "self-reported"] },
+          "status": { "enum": ["pass", "partial", "fail", "unknown"] },
+          "value": { "type": "number", "minimum": 0, "maximum": 100 },
+          "source": { "type": "string", "minLength": 1 },
+          "observedAt": { "type": "string", "format": "date-time" },
+          "digest": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "usefulOutcomes": { "type": "number", "minimum": 0 },
+        "tokens": { "type": "number", "minimum": 0 },
+        "computeSeconds": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

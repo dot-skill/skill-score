@@ -1,0 +1,30 @@
+{
+  "name": "@dot-skill/skill-score",
+  "version": "0.1.0-draft.1",
+  "description": "Vendor-neutral scoring protocol and reference implementation for .skill artifacts",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "skill-score": "./dist/src/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "files": ["dist", "schema", "docs"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "npm run build && npm test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "excellent": {
+    "protocolVersion": "0.1",
+    "artifact": { "id": "excellent", "valid": true, "parseable": true },
+    "evidence": [
+      { "id": "s", "dimension": "structuralCompleteness", "kind": "observed", "status": "pass", "source": "validator" },
+      { "id": "e", "dimension": "executability", "kind": "observed", "status": "pass", "source": "sandbox run" },
+      { "id": "v", "dimension": "validationEvidence", "kind": "verified-external", "status": "pass", "source": "CI" },
+      { "id": "p", "dimension": "portability", "kind": "observed", "status": "pass", "source": "matrix" },
+      { "id": "sec", "dimension": "privacySecurity", "kind": "observed", "status": "pass", "source": "review" },
+      { "id": "pro", "dimension": "provenanceIntegrity", "kind": "observed", "status": "pass", "source": "manifest" },
+      { "id": "r", "dimension": "reproducibility", "kind": "observed", "status": "pass", "source": "replay" },
+      { "id": "eff", "dimension": "efficiency", "kind": "observed", "status": "pass", "source": "benchmark" },
+      { "id": "m", "dimension": "maintenanceFreshness", "kind": "verified-external", "status": "pass", "source": "history" },
+      { "id": "a", "dimension": "adoptionOutcomes", "kind": "verified-external", "status": "partial", "source": "registry" }
+    ]
+  },
+  "incomplete": {
+    "protocolVersion": "0.1",
+    "artifact": { "id": "incomplete", "valid": false, "parseable": true },
+    "evidence": []
+  },
+  "forged": {
+    "protocolVersion": "0.1",
+    "artifact": { "id": "self-claimed", "valid": true, "parseable": true },
+    "evidence": [
+      { "id": "claim", "dimension": "executability", "kind": "self-reported", "status": "pass", "source": "author statement", "digest": "not-a-signature" }
+    ]
+  },
+  "privacyRisk": {
+    "protocolVersion": "0.1",
+    "artifact": { "id": "privacy-risk", "valid": true, "parseable": true, "containsSecrets": true },
+    "evidence": [
+      { "id": "secret", "dimension": "privacySecurity", "kind": "observed", "status": "fail", "source": "fixture scan" }
+    ]
+  }
+}

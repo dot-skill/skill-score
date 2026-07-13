@@ -1,6 +1,6 @@
 {
-  "name": "@dot-skill/skill-score",
-  "version": "0.1.0-draft.1",
+  "name": "@skillerr/skill-score",
+  "version": "0.1.0-draft.2",
   "description": "Vendor-neutral scoring protocol and reference implementation for .skill artifacts",
   "license": "MIT",
   "type": "module",
@@ -13,7 +13,19 @@
       "import": "./dist/src/index.js"
     }
   },
-  "files": ["dist", "schema", "docs"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dot-skill/skill-score.git"
+  },
+  "homepage": "https://dot-skill.github.io/skillerr-com/",
+  "bugs": {
+    "url": "https://github.com/dot-skill/skill-score/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": ["dist", "schema", "docs", "README.md", "LICENSE"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",

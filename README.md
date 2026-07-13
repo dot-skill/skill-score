@@ -22,20 +22,30 @@ replace human judgment. See the [draft specification](docs/spec-v0.1.md).
 ## Install and use
 
 ```sh
-npm install
-npm run build
-node dist/src/cli.js test/fixtures/cases.json release
+npm install @skillerr/skill-score
 ```
 
 Library usage:
 
 ```ts
-import { scoreSkill } from "@dot-skill/skill-score";
+import { scoreSkill } from "@skillerr/skill-score";
 
 const result = scoreSkill(assessment, "release");
 ```
 
+Or from a checkout of this repo:
+
+```sh
+npm install
+npm run build
+node dist/src/cli.js test/fixtures/cases.json release
+```
+
 Assessment inputs follow [`schema/assessment.schema.json`](schema/assessment.schema.json).
+The `dot-skill/skillerr` reference CLI's `skill score <file.skill>` builds
+this input automatically from a package's `provenance/benchmark.json`
+(see [docs/EVAL.md](https://github.com/dot-skill/skillerr/blob/main/docs/EVAL.md))
+— you don't need to hand-write the assessment JSON for a `.skill` package.
 
 ## Formula at a glance
 

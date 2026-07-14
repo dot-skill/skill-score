@@ -1,0 +1,68 @@
+name: Publish
+
+# Tag-based releases only. Merge to main runs CI, not publish.
+# Flow: merge -> CI green -> git tag vX.Y.Z -> this workflow (test + publish).
+# We do not publish on every push to main -- tags prevent accidental releases.
+# Mirrors dot-skill/skillerr's own publish.yml.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag, or SHA to publish from (defaults to the workflow ref)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      # Trusted publishing + provenance require npm >= 11.5.1
+      - run: npm install -g npm@latest
+
+      - run: npm ci
+      - run: npm run check
+
+      # Auth: npm Trusted Publishing (OIDC) if configured for this package on
+      # npmjs.com, else the NPM_TOKEN repo secret as a fallback.
+      - name: Publish package
+        env:
+          NPM_TOKEN_FALLBACK: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Empty NODE_AUTH_TOKEN blocks OIDC; only set it when NPM_TOKEN exists.
+          if [[ -n "${NPM_TOKEN_FALLBACK:-}" ]]; then
+            export NODE_AUTH_TOKEN="${NPM_TOKEN_FALLBACK}"
+          else
+            unset NODE_AUTH_TOKEN || true
+          fi
+
+          name="$(node -p "require('./package.json').name")"
+          ver="$(node -p "require('./package.json').version")"
+          if npm view "${name}@${ver}" version >/dev/null 2>&1; then
+            echo "Skip ${name}@${ver} -- already on npm"
+            exit 0
+          fi
+          npm publish --access public --provenance

@@ -65,4 +65,9 @@ jobs:
             echo "Skip ${name}@${ver} -- already on npm"
             exit 0
           fi
-          npm publish --access public --provenance
+          # This package's version string uses a semver prerelease suffix
+          # (e.g. 0.1.0-draft.2), which npm refuses to default to the
+          # `latest` dist-tag without an explicit --tag. This repo doesn't
+          # run a separate stable channel, so every publish is the one
+          # `npm install @skillerr/skill-score` should resolve to.
+          npm publish --access public --provenance --tag latest

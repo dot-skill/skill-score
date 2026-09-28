@@ -67,3 +67,5 @@ Contributions are welcome under the governance and contribution policies in this
 ## License
 
 MIT © Bharat Dudeja.
+
+The names and logos are trademarks: see [TRADEMARKS.md](TRADEMARKS.md).
